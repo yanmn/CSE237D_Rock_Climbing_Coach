@@ -12,7 +12,7 @@ from utils.move_validity_utils import getColorRoute, getPercentMoveValidity, get
 
 def get_parser():
     parser = argparse.ArgumentParser(description='Run script to produce a report from a climb video')
-    parser.add_argument('-d', '--dir', type=str, default='../test_data',
+    parser.add_argument('-d', '--dir', type=str, default='./src/test_data',
                         help='filepath of climb video and hold image for generating report.txt')
     return parser
 

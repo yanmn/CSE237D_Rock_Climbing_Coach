@@ -10,7 +10,7 @@ def get_video_array(vid_path):
     while to_read:
         to_read, frame = cap.read()
         if to_read:
-            frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+            # frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
             vid_arr.append(frame)
     return np.array(vid_arr)
 

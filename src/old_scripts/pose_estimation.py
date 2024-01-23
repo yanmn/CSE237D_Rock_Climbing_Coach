@@ -320,7 +320,6 @@ def main(cap, cap_holds):
           plot_image(img, results, cx, cy, elapsed_time)
           raw_predictions.append(int(elapsed_time)) # conversion to int just cuts the decimal part, which is actually the intended behavior followed by ground truth videos
 
-
         # from next frame onwards, first check similarity and then store the coordinates
         else:
           result = check_similarity(prev, lm_list) #prev = 66 cordinates, lm_list = 66 cordinates
@@ -336,8 +335,7 @@ def main(cap, cap_holds):
             stored_frames_count += 1
             output_img_list.append(img)
             plot_image(img, results, cx, cy, elapsed_time)
-            raw_predictions.append(int(elapsed_time)) # conversion to int just cuts the decimal part, which is actually the intended behavior followed by ground truth videos
-          
+            raw_predictions.append(int(elapsed_time)) # conversion to int just cuts the decimal part, which is actually the intended behavior followed by ground truth videos 
           prev = lm_list
             
         print('Prev list: ', prev)
@@ -371,6 +369,7 @@ def main(cap, cap_holds):
   
   output_video.release()
   print('Output Video Released: ', fps_output, 'fps')
+
 
   # computing accuracy
   # load the ground truth from excel

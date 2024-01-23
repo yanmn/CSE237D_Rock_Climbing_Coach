@@ -11,7 +11,7 @@ API_KEY = '3cZO2UYZLwtFu4j2STv0'
 
 def get_parser():
     parser = argparse.ArgumentParser('Command line utility for hold detection')
-    parser.add_argument('-i', '--image_path', type=str, help='path to image for hold detection')
+    parser.add_argument('-i', '--image_path', type=str, help='path to image for hold detection', default='D:/CIMI4D_expend/Rock_Climbing_Coach/CSE237D_Rock_Climbing_Coach/src/test_data/bouldering_worldcap_1.png')
     return parser
 
 def predict_holds(rgb_img):

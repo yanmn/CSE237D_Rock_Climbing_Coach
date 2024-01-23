@@ -95,8 +95,8 @@ def get_holds_used(holds, dict_coordinates):
         for h in range(len(holds)):
             hold = holds[h]
             joint_usage = [joint_in_hold(joint, hold) for joint in joint_list[i]]
-            if sum(joint_usage) >= 0:
-            # if sum(joint_usage) >= 1:
+            # if sum(joint_usage) >= 0:
+            if sum(joint_usage) >= 1:
                 try: # checking if next frame also uses same hold
                     next_joint_usage = [joint_in_hold(joint, hold) for joint in joint_list[i+1]]
                     if sum(next_joint_usage) >= 1:

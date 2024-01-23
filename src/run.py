@@ -27,17 +27,26 @@ def get_data(args, get_cropped=True):
     
     raw_vid = get_video_array(vid_path)
     hold_img = cv2.cvtColor(cv2.imread(img_path), cv2.COLOR_BGR2RGB)
-    return raw_vid, hold_img
+    return raw_vid, hold_img, img_path, vid_path
 
 def main(args):
-    raw_vid, hold_img = get_data(args)
+    raw_vid, hold_img, img_path, vid_path = get_data(args)
     
     # process video, extract all necessary information
-    raw_vid, climb_holds_used, holds, colors, results_arr, landmarks_arr, all_positions, sig_positions, significances = process_video(args.dir, raw_vid, hold_img)
+    raw_vid, climb_holds_used, holds, colors, results_arr, landmarks_arr, all_positions, sig_positions, significances = process_video(args.dir, raw_vid, hold_img, vid_path, img_path)
     print("Video frames: ", raw_vid.shape[0])
     print("Holds Used Frames: ", len(climb_holds_used))
     print("All Positions Frames: ", len(all_positions['left_hand']))
     print("Sig Position Frames: ", len(sig_positions['left_hand']))
+
+    # image = cv2.imread(img_path)
+    # for rect in holds:
+    #     point1, point2 = rect[0], rect[1]
+    #     cv2.rectangle(image, point1, point2, (0, 255, 0), 2)
+
+    # cv2.imshow('Image with Multiple Rectangles', image)
+
+
 
     percent_complete = compute_percent_complete_color(holds, colors, all_positions)
     
@@ -54,13 +63,21 @@ def main(args):
         raise Exception("Total Time Elapsed could Not Be Computed")
     total_distance = compute_total_distance_traveled(args.dir, sig_positions)
     
+    # print("")
+    # print("% Complete: ", percent_complete)
+    # print("# of Moves Taken: ", num_moves)
+    # print("Hold Validity: {:.2f}".format(hold_validity * 100))
+    # print("Move Validity: {:.2f}".format(move_validity * 100))
+    # print("Climb Duration: {} sec".format(time_elapsed))
+    # print("Total Distance Climbed: {:.2f} px".format(total_distance))
+
     print("")
-    print("% Complete: ", percent_complete)
-    print("# of Moves Taken: ", num_moves)
-    print("Hold Validity: {:.2f}".format(hold_validity * 100))
-    print("Move Validity: {:.2f}".format(move_validity * 100))
-    print("Climb Duration: {} sec".format(time_elapsed))
-    print("Total Distance Climbed: {:.2f} px".format(total_distance))
+    print("% 本条线路完成度: ", percent_complete)
+    print("# 运动员岩点行进间移动次数: ", num_moves)
+    print("Control的岩点: {:.2f}%".format(hold_validity * 100))
+    print("有效移动: {:.2f}%".format(move_validity * 100))
+    print("持续攀爬时间: {} sec".format(time_elapsed))
+    print("总爬升距离: {:.2f} px".format(total_distance))
 
     with open(os.path.join(args.dir, 'report.json'), 'w') as f:
         to_write = {
